@@ -7,7 +7,7 @@ case class State(label: String)
 
 case class Transition(from: State, to: State, symbol: Char)
 
-class DFA(states: Set[State], transitions: Set[Transition], start: State, accept: Set[State]):
+class DFA(val states: Set[State], val transitions: Set[Transition], val start: State, val accept: Set[State]):
     def accepts(input: String) = 
         var currentState = start
         var currentInput = ""
