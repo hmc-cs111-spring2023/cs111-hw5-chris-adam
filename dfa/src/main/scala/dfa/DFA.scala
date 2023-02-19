@@ -9,7 +9,7 @@ case class Transition(from: State, to: State, symbol: Char)
 
 class DFA(states: Set[State], transitions: Set[Transition], start: State, accept: Set[State]):
     def accepts(input: String) = 
-        var currentState = startState
+        var currentState = start
         var currentInput = ""
         var result = false
         for (i <- input) {
@@ -19,7 +19,7 @@ class DFA(states: Set[State], transitions: Set[Transition], start: State, accept
         }
 
         // check if we're in a accepting state
-        if (acceptingStates.contains(currentState)) then true
+        if (accept.contains(currentState)) then true
         else false
             
     // for loop it (over length of input)
