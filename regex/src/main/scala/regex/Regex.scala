@@ -25,9 +25,16 @@ case class Star(value: RegularLanguage) extends RegularLanguage
 
 /** Simplifies a regular language */
 def simplify(lang: RegularLanguage): RegularLanguage = lang match
-    case Concat(Epsilon, lang) => simplify(lang)
-    case Concat(lang, Epsilon) => simpli
-    
+    case Concat(Epsilon, sublang) => simplify(sublang)
+    case Concat(sublang, Epsilon) => simplify(sublang)
+    case Concat(Empty, sublang) => simplify(Empty)
+    case Concat(sublang, Empty) => simplify(Empty)
+    case Concat(sublang1, sublang2) => Concat(simplify(sublang1), simplify(sublang2))
+    case Union(Empty, sublang) => simplify(sublang)
+    case Union(sublang, Empty) => simplify(sublang)
+    case Union(sublang1, sublang2) => Union(simplify(sublang1), simplify(sublang2))
+    case Star(Epsilon) => Epsilon
+    case Star(Empty) => Empty
     case Star(sublang) => Star(simplify(sublang))
     case _ => lang
 /** A language is nullable if it contains ε */
